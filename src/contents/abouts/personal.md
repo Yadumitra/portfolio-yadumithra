@@ -19,7 +19,7 @@ let hobbies = [
 	'Tech Leadership',
 	'Mentoring',
 	'Innovation',
-	'Problem Solving'
+	'Problem Solving',
 	'Programming',
 	'Memes',
 	'Video Games',
