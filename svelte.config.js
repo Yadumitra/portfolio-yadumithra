@@ -14,7 +14,7 @@ const config = {
 			extensions: ['.md'],
 			highlight: {
 				highlighter: async (code, lang = 'text') => {
-					const highlighter = await createHighlighter({ themes: ['poimandres'], langs: ['javascript', 'typescript', 'bash', 'jsx', 'tsx', 'html'] });
+					const highlighter = await createHighlighter({ themes: ['poimandres'], langs: ['javascript', 'typescript', 'bash', 'jsx', 'tsx', 'html', 'python'] });
 					const html = escapeSvelte(
 						highlighter.codeToHtml(code, {
 							lang,

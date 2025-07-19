@@ -1,48 +1,48 @@
 ---
 title: 'gear.ts'
-description: 'Explore my hardware and software setup. From a powerful computer with an i5-10400F, 16GB of RAM, RTX 3060, and more, to a Macbook Air M2 for work on the go. My favorite tools include NeoVIM, Tmux, iTerm, and Oh my zsh. I hosts my website and projects on Vercel. Discover my tech world!'
+description: 'Explore my development and AI research setup. From a powerful workstation optimized for machine learning with dedicated GPU, to portable devices for coding on the go. My favorite tools include VS Code, Jupyter, Docker, and Linux. I deploy projects on GitHub Pages and Vercel. Discover my tech arsenal!'
 ---
 
 ```ts
 const hardware = {
 	computers: [
 		{
-			name: 'Macbook Pro M3',
-			desc: 'The sidekick I take on adventures (aka coffee shops). Sleek, powerful, and always ready to roll.',
+			name: 'Custom Workstation',
+			desc: 'My AI powerhouse – built for deep learning with NVIDIA GPU, plenty of RAM, and fast storage for training models.',
+			tags: ['Desktop']
+		},
+		{
+			name: 'ASUS Laptop',
+			desc: 'My reliable companion for coding sessions, conferences, and on-the-go development. Great performance for development work.',
 			tags: ['Laptop']
 		},
 		{
-			name: 'Logitech MX Keys Mini',
-			desc: 'My classy compact 65% keyboard – perfect for keeping things stylish and minimal.',
+			name: 'Mechanical Keyboard',
+			desc: 'My trusty coding companion with tactile feedback that makes long programming sessions a joy.',
 			tags: ['Keyboard']
 		},
 		{
-			name: 'Noir Z1',
-			desc: 'My compact 65% layout keyboard',
-			tags: ['Keyboard']
-		},
-		{
-			name: 'Logitech MX Master 3S',
-			desc: 'The all-rounder mouse I use for everything... except pwning noobs in games. 😅',
+			name: 'Gaming Mouse',
+			desc: 'Precise and comfortable for both development work and the occasional gaming break.',
 			tags: ['Mouse']
 		}
 	],
 	monitors: [
 		{
-			name: 'Xiaomi Mi Curved Gaming Monitor 34',
-			desc: 'The big boss on my desk! A 34" 1440p 144Hz curved beauty that makes everything look amazing.',
+			name: 'Dual Monitor Setup',
+			desc: 'Extended workspace with one monitor for code and another for documentation, terminals, or monitoring model training.',
 			tags: ['Monitor']
 		}
 	],
 	audio: [
 		{
-			name: 'Steelseries Arctis 7',
-			desc: 'A comfy wireless headset with awesome sound. No more cable tangles, and the chat mix feature is a total game-changer!',
+			name: 'Over-ear Headphones',
+			desc: 'Crystal clear audio for video calls, online meetings, and deep focus coding sessions with noise isolation.',
 			tags: ['Headphone']
 		},
 		{
-			name: 'Redmi Buds 3 Pro',
-			desc: 'The multitasker of my audio gear – noise canceling, dual Bluetooth connections, and perfect for on-the-go jams.',
+			name: 'Wireless Earbuds',
+			desc: 'Perfect for mobile development, podcast listening, and staying connected during outdoor activities.',
 			tags: ['Earbuds']
 		}
 	]
@@ -50,24 +50,37 @@ const hardware = {
 
 const software = [
 	{
-		name: 'Neovim',
-		desc: 'My Swiss Army knife for everything text-related – from coding to taking notes. Neovim is life!',
+		name: 'VS Code',
+		desc: 'My go-to IDE for all development work – from Python scripts to web applications. Enhanced with AI extensions for better productivity.',
 		tags: ['Editor']
 	},
 	{
-		name: 'Tmux',
-		desc: 'Terminal multitasking wizardry – because tabs are too mainstream.',
-		tags: ['Terminal']
+		name: 'Jupyter Notebook',
+		desc: 'Essential for data science, machine learning experiments, and prototyping AI models with interactive development.',
+		tags: ['Development']
 	},
 	{
-		name: 'Ghostty',
-		desc: 'A lightning-fast terminal emulator that’s as cool as it sounds, with GPU acceleration and all the bells and whistles.',
-		tags: ['Terminal']
+		name: 'Docker',
+		desc: 'Containerization hero that keeps my development environments clean and my deployments consistent across different systems.',
+		tags: ['DevOps']
 	},
 	{
-		name: 'Oh my zsh',
-		desc: 'My shell of choice, spiced up with the awesome powerlevel10k theme.',
+		name: 'Linux Terminal',
+		desc: 'My command center for everything – from git operations to server management and running training scripts.',
 		tags: ['Terminal']
+	}
+];
+
+const hosting = [
+	{
+		name: 'GitHub Pages',
+		desc: "Perfect for hosting static sites and project demonstrations. Git-based workflow makes deployment seamless.",
+		tags: ['Hosting']
+	},
+	{
+		name: 'Vercel',
+		desc: "Lightning-fast deployments for modern web applications. Perfect for React and Next.js projects with automatic CI/CD.",
+		tags: ['Hosting']
 	}
 ];
 

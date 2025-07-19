@@ -1,32 +1,34 @@
 ---
 title: 'work.ts'
-description: "I'm Wisnu Wicaksono, a Full-Stack Developer currently working fulltime at MSIG Life. Based in Jakarta, Indonesia, I specialize in building engaging user interfaces using React, Next.js, and TypeScript. With a strong foundation in frontend technologies and a passion for clean, efficient code, I combine Tailwind CSS with modern JavaScript frameworks to create exceptional web experiences. When I'm not crafting responsive websites, you can find me exploring Linux (Arch btw), playing video games, or enjoying a good movie!"
+description: "I'm Yadumithra U N, a student passionate about developing innovative AI solutions. Currently serving as IEDC Campus Lead at my university and MuLearn Tech Lead, I specialize in machine learning, computer vision, and full-stack development. With expertise in Python, TensorFlow, and OpenCV, I build intelligent systems that solve real-world problems. When I'm not training neural networks or coding, you can find me exploring new technologies, contributing to open source projects, or mentoring fellow developers!"
 ---
 
 ```ts
-const PROFESSION = 'Full-Stack Developer';
-const LOCATION = 'Jakarta, Indonesia';
+const PROFESSION = 'student at LBSCEK';
+const LOCATION = 'Kerala, India';
 
-// Employers
+// Leadership Roles
 const employers = [
-	{ name: 'MSIG Life', role: 'Frontend Developer', type: 'Full-time' },
-	{ name: 'Selego', role: 'Frontend Developer', type: 'Part-time' },
-	{ name: 'Upwork', role: 'Frontend Developer', type: 'Freelance' },
-	{ name: 'Falah Inovasi Teknologi', role: 'Frontend Developer', type: 'Previous' }
+	{ name: 'IEDC', role: 'Campus Lead', type: 'Current (2024-Present)' },
+	{ name: 'MuLearn', role: 'Tech Lead', type: 'Current (2025)' },
+	{ name: 'IEDC', role: 'Creative Lead', type: 'Previous (2023-2024)' },
+	{ name: 'Open Source', role: 'Contributor', type: 'Ongoing' }
 ];
 
 // Top Skills
 const skills = {
-	languages: ['TypeScript', 'Go', 'Java'],
+	languages: ['Python', 'JavaScript', 'TypeScript', 'C++'],
 	frameworks: [
+		'TensorFlow',
+		'OpenCV',
 		'React',
-		'Next.js',
-		'Tailwind CSS',
 		'Node.js',
-		'Laravel' // still learning this...
+		'Flask',
+		'FastAPI'
 	],
-	databases: ['PostgreSQL', 'MongoDB'],
-	tools: ['Figma', 'Version Control', 'GraphQL', 'Rest API', 'TRPC']
+	specializations: ['Computer Vision', 'Machine Learning', 'YOLO', 'MediaPipe'],
+	databases: ['MongoDB', 'PostgreSQL', 'SQLite'],
+	tools: ['Git', 'Docker', 'Jupyter', 'VS Code', 'Linux']
 };
 
 // Fun Facts
