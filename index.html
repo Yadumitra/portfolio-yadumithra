@@ -352,6 +352,7 @@ Type '<span class="help-command" onclick="runCommand('help')">help</span>' to se
 • <span class="help-command" onclick="runCommand('contact')">contact</span> - Get in touch
 • <span class="help-command" onclick="runCommand('experience')">experience</span> - Professional background
 • <span class="help-command" onclick="runCommand('resume')">resume</span> - View detailed resume
+• <span class="help-command" onclick="runCommand('test')">test</span> - Test terminal functionality
 • <span class="help-command" onclick="runCommand('clear')">clear</span> - Clear the terminal</div>
 
                 <div id="terminal-output"></div>
@@ -889,12 +890,40 @@ drwxr-xr-x 2 yadumithra yadumithra 4096 Jan 2024 skills/
 10 date
 11 neofetch
 
-💡 Use ↑↓ arrow keys to navigate history!`,
+💡 Use ↑↓ arrow keys to navigate history!`;
             },
 
             clear: () => {
                 document.getElementById('terminal-output').innerHTML = '';
                 return '';
+            },
+
+            test: () => `🧪 Terminal Test Results:
+✅ JavaScript is working
+✅ Commands object is loaded
+✅ Event listeners are active
+✅ DOM elements are accessible
+
+Try typing: help, about, skills, projects
+
+Debug info:
+- Commands available: ${Object.keys(commands).length}
+- Terminal output element: ${document.getElementById('terminal-output') ? 'Found' : 'Missing'}
+- Command input element: ${document.getElementById('commandInput') ? 'Found' : 'Missing'}`,
+
+            debug: () => {
+                const debugInfo = {
+                    commands: Object.keys(commands),
+                    terminalOutput: !!document.getElementById('terminal-output'),
+                    commandInput: !!document.getElementById('commandInput'),
+                    eventListeners: 'Attached',
+                    timestamp: new Date().toISOString()
+                };
+                console.log('Debug Info:', debugInfo);
+                return `🔍 Debug Information:
+${JSON.stringify(debugInfo, null, 2)}
+
+Check browser console for detailed logs.`;
             },
 
             exit: () => {
@@ -912,44 +941,80 @@ Connection to portfolio closed.`;
         let commandHistory = [];
         let historyIndex = -1;
 
-        document.getElementById('commandInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const command = this.value.trim().toLowerCase();
-                if (command) {
-                    commandHistory.push(command);
-                    historyIndex = commandHistory.length;
-                    runCommand(command);
-                    this.value = '';
-                }
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                if (historyIndex > 0) {
-                    historyIndex--;
-                    this.value = commandHistory[historyIndex];
-                }
-            } else if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                if (historyIndex < commandHistory.length - 1) {
-                    historyIndex++;
-                    this.value = commandHistory[historyIndex];
-                } else {
-                    historyIndex = commandHistory.length;
-                    this.value = '';
-                }
-            } else if (e.key === 'Tab') {
-                e.preventDefault();
-                const input = this.value.toLowerCase();
-                const matches = Object.keys(commands).filter(cmd => cmd.startsWith(input));
-                if (matches.length === 1) {
-                    this.value = matches[0];
-                } else if (matches.length > 1) {
-                    runCommand('', `Available commands: ${matches.join(', ')}`);
-                }
+        // Initialize everything after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing terminal...');
+            
+            const commandInput = document.getElementById('commandInput');
+            const terminalOutput = document.getElementById('terminal-output');
+            
+            console.log('Command input found:', !!commandInput);
+            console.log('Terminal output found:', !!terminalOutput);
+            
+            if (commandInput) {
+                commandInput.addEventListener('keydown', function(e) {
+                    console.log('Key pressed:', e.key);
+                    
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const command = this.value.trim().toLowerCase();
+                        console.log('Command entered:', command);
+                        
+                        if (command) {
+                            commandHistory.push(command);
+                            historyIndex = commandHistory.length;
+                            runCommand(command);
+                            this.value = '';
+                        }
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (historyIndex > 0) {
+                            historyIndex--;
+                            this.value = commandHistory[historyIndex];
+                        }
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (historyIndex < commandHistory.length - 1) {
+                            historyIndex++;
+                            this.value = commandHistory[historyIndex];
+                        } else {
+                            historyIndex = commandHistory.length;
+                            this.value = '';
+                        }
+                    } else if (e.key === 'Tab') {
+                        e.preventDefault();
+                        const input = this.value.toLowerCase();
+                        const matches = Object.keys(commands).filter(cmd => cmd.startsWith(input));
+                        if (matches.length === 1) {
+                            this.value = matches[0];
+                        } else if (matches.length > 1) {
+                            runCommand('', `Available commands: ${matches.join(', ')}`);
+                        }
+                    }
+                });
+                
+                // Focus the input
+                commandInput.focus();
+                console.log('Event listeners attached successfully');
+            } else {
+                console.error('Command input element not found!');
             }
+            
+            // Initialize matrix rain
+            createMatrixRain();
         });
 
         function runCommand(command, customOutput = null) {
+            console.log('Running command:', command);
+            
             const output = document.getElementById('terminal-output');
+            
+            if (!output) {
+                console.error('Terminal output element not found');
+                return;
+            }
+            
+            console.log('Terminal output element found, adding content...');
             
             // Add command prompt
             const promptDiv = document.createElement('div');
@@ -964,13 +1029,22 @@ Connection to portfolio closed.`;
             if (customOutput) {
                 outputDiv.innerHTML = customOutput;
             } else if (commands[command]) {
-                outputDiv.innerHTML = commands[command]();
+                const result = commands[command]();
+                console.log('Command result:', result);
+                outputDiv.innerHTML = result;
             } else if (command) {
                 outputDiv.innerHTML = `Command not found: ${command}. Type 'help' to see available commands.`;
             }
 
             output.appendChild(outputDiv);
-            output.scrollTop = output.scrollHeight;
+            
+            // Scroll to bottom
+            const terminalBody = document.querySelector('.terminal-body');
+            if (terminalBody) {
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+            
+            console.log('Command output added successfully');
         }
 
         function animateSkillBars() {
@@ -1077,14 +1151,25 @@ Connection to portfolio closed.`;
         // Initialize matrix effect
         createMatrixRain();
 
-        // Focus input on page load
+        // Initialize everything when page loads
         window.addEventListener('load', () => {
-            document.getElementById('commandInput').focus();
+            const commandInput = document.getElementById('commandInput');
+            if (commandInput) {
+                commandInput.focus();
+                console.log('Portfolio terminal loaded successfully!');
+            }
+            createMatrixRain();
         });
 
         // Maintain focus on click
-        document.addEventListener('click', () => {
-            document.getElementById('commandInput').focus();
+        document.addEventListener('click', (e) => {
+            // Don't focus if clicking on a link or button
+            if (!e.target.classList.contains('link') && !e.target.classList.contains('help-command')) {
+                const commandInput = document.getElementById('commandInput');
+                if (commandInput) {
+                    commandInput.focus();
+                }
+            }
         });
 
         // Handle window resize for matrix effect
