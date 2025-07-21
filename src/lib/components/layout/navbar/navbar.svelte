@@ -34,7 +34,7 @@
 	<div class="hidden items-center justify-between gap-2 px-2 lg:flex lg:px-0">
 		<div class="flex items-center gap-2">
 			<div class="bg-ash-200 h-4 w-1.5"></div>
-			<a class="flex items-center" href="https://github.com/wiscaksono/wiscaksono-site" target="_blank" rel="norreferrer">
+			<a class="flex items-center" href="https://github.com/yadumitra/yadu" target="_blank" rel="norreferrer">
 				<svg
 					class="mr-1 h-3 w-3"
 					xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@
 			{/each}
 		</ul>
 		<div class="not-sr-only hidden items-center gap-2 lg:flex">
-			<a class="bg-ash-300 shrink-0 px-2 py-0.5 leading-none text-black" href="https://github.com/wiscaksono" target="_blank" rel="noreferrer">Wiscaksono</a>
+			<a class="bg-ash-300 shrink-0 px-2 py-0.5 leading-none text-black" href="https://github.com/yadumitra" target="_blank" rel="noreferrer">Yadumithra U N</a>
 		</div>
 	</div>
 </nav>

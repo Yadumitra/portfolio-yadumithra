@@ -3,8 +3,8 @@
 </script>
 
 <Metadata
-	title="Wiscaksono"
-	description="Get to know me, Wisnu Wicaksono, through this website! I'm a passionate frontend developer and electrical engineering student, and I've poured my skills and creativity into building this site with Next.js and Tailwind CSS. Explore my interactive projects, clean portfolio, and a glimpse into my technical expertise. If you're seeking a talented developer for your next project or simply looking for inspiration, feel free to get in touch!"
+	title="Yadumithra U N"
+	description="Get to know me, Yadumithra U N, through this website! I'm a passionate frontend developer and electrical engineering student, and I've poured my skills and creativity into building this site with SvelteKit and Tailwind CSS. Explore my interactive projects, clean portfolio, and a glimpse into my technical expertise. If you're seeking a talented developer for your next project or simply looking for inspiration, feel free to get in touch!"
 />
 
 <section class="flex flex-grow flex-col items-center justify-center space-y-2.5 md:space-y-5">
@@ -17,7 +17,7 @@
 !________!!__!!_____!!_____!!__!__!!__!__!!_____!!_____!!__!__!!_____!`}
 	</code>
 
-	<p class="sr-only">Wisnu Wicaksono</p>
+	<p class="sr-only">Yadumithra U N</p>
 
 	<div class="text-center">
 		<p>Self taught web developer</p>

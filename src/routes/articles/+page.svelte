@@ -6,9 +6,11 @@
 </script>
 
 <Metadata
-	title="Articles | Wiscaksono"
-	description="Discover the latest articles, delve into the world of technology, and explore the latest trends in the tech industry. Stay up-to-date with the latest news, and immerse yourself in the world of technology."
+	title="Articles | Yadumithra U N"
+	description="Read articles about web development, programming, and technology"
 />
+
+<h1 class="sr-only">Yadumithra U N's Articles</h1>
 
 <h1 class="sr-only">Wisnu Wicaksono's Articles</h1>
 

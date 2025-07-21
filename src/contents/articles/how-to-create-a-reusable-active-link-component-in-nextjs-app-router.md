@@ -1,138 +1,38 @@
----
-title: How to Create a Reusable Active Link Component in Next.js App Router
-description: Enhance your Next.js application's navigation experience with a reusable active link component. This step-by-step guide will teach you how to implement an active link component that visually highlights the current page, improving user orientation and overall usability.
-publishedDate: March 17, 2024
-poster: /articles/activelink-nextjs/preview.gif
----
+title: My Journey into AI, Smart Cities, and Building Cool Tech
+description: From late-night coding marathons to building real-world AI projects, here's a glimpse into my journey as an engineering student exploring machine learning, smart city innovations, and everything in between.
+publishedDate: July 21, 2025
+poster: /myjourney.jpeg
+Hey, I’m Yaduuuu 👋
+If there’s one thing I’ve learned in engineering, it’s that curiosity can take you places textbooks never will. I started my Computer Science journey like everyone else—C programming assignments, random debugging headaches, and the occasional “why did I even choose this branch?” moment. But somewhere between writing my first Hello World and training my first ML model, I realized I wanted to build stuff that matters.
 
-Providing a seamless and intuitive navigation experience is crucial for building engaging web applications. One way to achieve this is by implementing an active link component that visually highlights the current page, helping users effortlessly track their location within the application. In this tutorial, we'll dive into creating a reusable active link component for a Next.js application, enhancing overall usability and user experience.
+Fast forward to now—I’m deep into machine learning, computer vision, and projects that blur the line between tech and real-world impact.
 
-## Prerequisites
+Building for Smart Cities
+One of the coolest things I’ve worked on is Shuchithwa Eye, a smart surveillance and waste detection system. Imagine a city where cameras don’t just see but understand—spotting people throwing garbage in public spaces, tracking waste accumulation, and helping municipal teams clean up faster.
 
-Before we begin, ensure that you have a basic understanding of Next.js and React. Additionally, make sure that Node.js is installed on your machine.
+I used YOLOv8 for object detection, MediaPipe for pose estimation, and hooked it all up to a MongoDB-powered dashboard. Seeing it work in real-time for the first time was a chef’s kiss moment.
 
-## Getting Started
+We’re even taking this project to the Integrated Command and Control Centre (ICCC), Trivandrum soon—actual smart city stuff, not just classroom theory.
 
-Let's kickstart the process by setting up a new Next.js project and installing the necessary dependencies.
+Learning (and Failing) My Way Through AI
+ML isn’t magic. It’s hours of tweaking hyperparameters, wondering why your model refuses to hit 90% accuracy, and questioning your life choices at 2 AM. But every failure taught me something.
 
-### Step 1: Create a New Next.js Project
+Workshops like the one at IIIT Kottayam on advanced computer vision pushed me to experiment more—detecting human poses, improving tracking accuracy, and optimizing models for real-time performance.
 
-Open your terminal and run the following command to create a new Next.js project:
+Right now, I’m obsessed with improving pose detection for behavioral analysis—like detecting illegal dumping actions based on how a person moves. It’s frustrating, but it’s also the kind of problem that keeps me glued to my laptop.
 
-```bash
-npx create-next-app@latest nextjs-active-link
-```
+Hackathons, IEDC, and the Community
+Tech isn’t just about coding alone in a dark room (though, let’s be honest, that happens a lot). Being the IEDC Campus Lead has been a big part of my journey—organizing hackathons, building a stronger innovation culture across colleges, and meeting people who are just as crazy about tech as I am.
 
-Once the project is generated, navigate to the project directory:
+I love how hackathons force you to think fast, build faster, and sometimes fail spectacularly in 24 hours. It’s the best kind of learning.
 
-```bash
-cd nextjs-active-link
-```
+What’s Next?
+Short answer: a lot.
 
-Next, install the required dependencies:
+I’m aiming for a top-tier internship by 2026, diving deeper into AI for urban tech, and (fingers crossed) heading to MIT or an Ivy League school for my master’s.
 
-```bash
-npm install tailwind-merge clsx
-```
+But honestly? I just want to keep building things that make me go, “Whoa, I actually made this!”
 
-### Step 2: Set Up Components Folder
+So, Why Am I Sharing This?
+Because if you’re an engineering student reading this, stuck in yet another boring theory lecture, here’s the truth—your coolest projects won’t come from class; they’ll come from chasing your own curiosity. Build that random idea. Break stuff. Fix it. And someday, you’ll look back and realize you’ve built something worth sharing too.
 
-Create a new folder named components inside the **_src_** directory. Within this folder, create a file named **_active-link.tsx_** to house our active link component.
-
-### Step 3: Implement Classnames Utility
-
-In the utils folder, create a file named **_cn.ts_** to define a utility function for handling class names. Insert the following code:
-
-```ts
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
-}
-```
-
-This utility function will help us manage class names more efficiently and make it easier to apply conditional styles to our components.
-
-### Step 4: Develop the Active Link Component
-
-Inside **_active-link.tsx_**, build the active link component using the provided code snippet. Ensure to mark the file as client due to the usage of the **_usePathname_** hook, which is only available on the client side.
-
-```tsx
-'use client';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-import { cn } from '~/utils/cn';
-
-interface Props extends React.ComponentPropsWithoutRef<typeof Link> {
-	className?: string;
-	activeClassName?: string;
-}
-
-export const ActiveLink = (props: Props) => {
-	const pathname = usePathname();
-	const isActive = pathname === props.href;
-	const activeClassName = props.activeClassName ?? 'text-red-500';
-
-	return <Link {...props} className={cn(props.className, isActive && activeClassName)} />;
-};
-```
-
-In this component, we're using the **_usePathname_** hook from Next.js to get the current URL path. We then compare this path with the **_href_** prop passed to the component to determine if the link is currently active or not. Based on this condition, we apply the **_activeClassName_** style to the link, allowing us to visually distinguish the active link from the rest.
-
-The **_cn_** utility function we created earlier is used to merge the **_className_** prop with the **_activeClassName_** conditionally, making it easier to manage and apply multiple class names.
-
-### Step 5: Integrate Active Link in Layout
-
-To use the **_ActiveLink_** component within your application, you'll need to import it and employ it to create navigational links. The component will automatically apply the designated active styling when the link corresponds to the current path.
-
-Here's an example of how you can integrate the **_ActiveLink_** component in your application layout file (**_layout.tsx_**):
-
-```tsx
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-
-import { ActiveLink } from '~/components/active-link'; // Import the ActiveLink component
-
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-	title: 'Create Next App',
-	description: 'Generated by create next app'
-};
-
-export default function RootLayout({
-	children
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
-	return (
-		<html lang="en">
-			<body className={inter.className}>
-				<nav className="container mx-auto flex items-center justify-center gap-10 py-10">
-					{/* Use the ActiveLink component */}
-					{[...Array(10)].map((_, i) => (
-						<ActiveLink key={i} href={`/${i}`} className="px-2 py-1" activeClassName="bg-blue-500 !text-white">
-							Link {i}
-						</ActiveLink>
-					))}
-				</nav>
-				{children}
-			</body>
-		</html>
-	);
-}
-```
-
-In this example, we're using the **_ActiveLink_** component to create ten navigation links. The **_className_** prop sets the default styles for the links, while the **_activeClassName_** prop defines the styles to be applied when a link is active. In this case, the active link will have a blue background and white text color.
-
-## Conclusion
-
-Incorporating a reusable active link component into your Next.js application can significantly enhance the navigation experience for your users. By providing clear visual cues for the current page, users can effortlessly track their location within the application, leading to increased engagement and satisfaction.
-
-With the step-by-step guide provided in this tutorial, you now have the knowledge and tools to implement an active link component and take your Next.js application to new heights of usability and accessibility.
-
-For further learning and exploration, consider checking out the official Next.js documentation and other relevant resources on building user-friendly and intuitive web applications.

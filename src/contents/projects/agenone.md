@@ -1,16 +1,19 @@
 ---
-title: Agenone
-description: Experience the epitome of digital innovation with Agenone, a dynamic agency landing website meticulously crafted using Next.js, Tailwind CSS, and GSAP technology. Dive into a visually stunning hero section, conveying the agency's core advantages, explore an exhaustive services segment showcasing their diverse offerings, grasp their expertise through an experience statistic, peruse a portfolio highlighting past triumphs, read glowing testimonials from satisfied clients, and find a compelling call-to-action beckoning potential clients to initiate contact.
-poster: /projects/agenone.webp
+title: kasaroam
+description: Experience the beauty of kasaragod with Kasaroam, a travel website that showcases the stunning landscapes, rich culture, and vibrant community of this coastal gem. Explore breathtaking images, discover local attractions, and plan your next adventure in Kasaragod.
+poster: /projects/kasaroam.webp
 techstack:
-  - Next
+  - Next.js
+  - TailwindCSS
+  - React Slick
 ---
 
-Agenone, a groundbreaking digital agency landing website, unveils a captivating hero section, a comprehensive services showcase, an expertise statistic, a portfolio of notable projects, client testimonials, and an inviting call-to-action. Step into the future of digital excellence with Agenone.
-[Preview](https://agenone.wiscaksono.com), [Source code](https://github.com/wiscaksono/agenone).
+Kasaroam, a travel website dedicated to showcasing the beauty of Kasaragod, invites you to explore its stunning landscapes, rich culture, and vibrant community. With breathtaking images and detailed information about local attractions, planning your next adventure in this coastal gem has never been easier.
+[Preview](https://kasaroam.in),
 
 ## Stack
-
+- [Next.js](https://nextjs.org) - A React framework for building full-stack web applications
+- [TailwindCSS](https://tailwindcss.com) - A utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.
 - [React](https://nextjs.org) - Next.js is a React framework for building full-stack web applications
 - [TailwindCSS](https://tailwindcss.com) - A utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.
 - [React Slick](https://expo.dev) - a popular library for building carousels (slideshows or image galleries) in a React application.

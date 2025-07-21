@@ -1,4 +1,4 @@
-# Wisnu's Homepage
+# Yadumithra U N's Homepage
 
 ## Preview
 
@@ -15,8 +15,8 @@
 ## Running Locally
 
 ```bash
-git clone https://github.com/wiscaksono/wiscaksono-sv
-cd wiscaksono-sv
+git clone https://github.com/yadumitra/yadu
+cd yadu
 cp .env.example .env
 pnpm install
 pnpm dev

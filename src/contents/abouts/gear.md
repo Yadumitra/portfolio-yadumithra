@@ -7,66 +7,58 @@ description: 'Explore my hardware and software setup. From a powerful computer w
 const hardware = {
 	computers: [
 		{
-			name: 'Macbook Pro M3',
-			desc: 'The sidekick I take on adventures (aka coffee shops). Sleek, powerful, and always ready to roll.',
+			name: 'Asus VivoBook 15',
+			desc: 'My trusty workhorse. Handles ML model training, code, and the occasional binge-watch session like a champ.',
 			tags: ['Laptop']
-		},
-		{
-			name: 'Logitech MX Keys Mini',
-			desc: 'My classy compact 65% keyboard – perfect for keeping things stylish and minimal.',
-			tags: ['Keyboard']
-		},
-		{
-			name: 'Noir Z1',
-			desc: 'My compact 65% layout keyboard',
-			tags: ['Keyboard']
-		},
-		{
-			name: 'Logitech MX Master 3S',
-			desc: 'The all-rounder mouse I use for everything... except pwning noobs in games. 😅',
-			tags: ['Mouse']
 		}
 	],
 	monitors: [
 		{
-			name: 'Xiaomi Mi Curved Gaming Monitor 34',
-			desc: 'The big boss on my desk! A 34" 1440p 144Hz curved beauty that makes everything look amazing.',
+			name: 'Samsung 24" FHD Monitor',
+			desc: 'Nothing fancy, but solid for dual-screen coding and debugging YOLO models without squinting.',
 			tags: ['Monitor']
 		}
 	],
 	audio: [
 		{
-			name: 'Steelseries Arctis 7',
-			desc: 'A comfy wireless headset with awesome sound. No more cable tangles, and the chat mix feature is a total game-changer!',
-			tags: ['Headphone']
+			name: 'Boat Rockerz 255 Pro+',
+			desc: 'My everyday wireless earphones – cheap, comfy, and good enough to keep me in the zone while coding.',
+			tags: ['Earphones']
+		}
+	],
+	extras: [
+		{
+			name: 'Logitech M235 Wireless Mouse',
+			desc: 'Simple, reliable, and way better than the VivoBook’s trackpad. No regrets.',
+			tags: ['Mouse']
 		},
 		{
-			name: 'Redmi Buds 3 Pro',
-			desc: 'The multitasker of my audio gear – noise canceling, dual Bluetooth connections, and perfect for on-the-go jams.',
-			tags: ['Earbuds']
+			name: 'Seagate 1TB External HDD',
+			desc: 'My backup lifesaver. Holds old projects, datasets, and random downloads I’ll probably never open again.',
+			tags: ['Storage']
 		}
 	]
 };
 
 const software = [
 	{
-		name: 'Neovim',
-		desc: 'My Swiss Army knife for everything text-related – from coding to taking notes. Neovim is life!',
+		name: 'VS Code',
+		desc: 'My main coding hub. With all the right extensions, it feels like cheating (but in a good way).',
 		tags: ['Editor']
 	},
 	{
-		name: 'Tmux',
-		desc: 'Terminal multitasking wizardry – because tabs are too mainstream.',
-		tags: ['Terminal']
+		name: 'Jupyter Notebook',
+		desc: 'My go-to for ML experiments – messy, but that’s how breakthroughs happen.',
+		tags: ['ML']
 	},
 	{
-		name: 'Ghostty',
-		desc: 'A lightning-fast terminal emulator that’s as cool as it sounds, with GPU acceleration and all the bells and whistles.',
-		tags: ['Terminal']
+		name: 'Obsidian',
+		desc: 'Where I dump ideas, project notes, and random thoughts. My second brain.',
+		tags: ['Notes']
 	},
 	{
-		name: 'Oh my zsh',
-		desc: 'My shell of choice, spiced up with the awesome powerlevel10k theme.',
+		name: 'Oh My Zsh',
+		desc: 'Makes my terminal look and feel cooler than it has any right to be.',
 		tags: ['Terminal']
 	}
 ];
@@ -74,7 +66,12 @@ const software = [
 const hosting = [
 	{
 		name: 'Vercel',
-		desc: "Deploys so fast, it's practically magic! Git push, and voilà – my website is live.",
+		desc: "The fastest way I deploy stuff. Push to GitHub, grab a coffee, and it’s live.",
+		tags: ['Hosting']
+	},
+	{
+		name: 'Render',
+		desc: "Sometimes I need a cheap backend. Render gets the job done without crying for my wallet.",
 		tags: ['Hosting']
 	}
 ];

@@ -18,11 +18,11 @@
 </script>
 
 <Metadata
-	title="Projects | Wiscaksono"
-	description="Discover the interactive brilliance of my projects, peruse my polished portfolio, and delve into a sneak peek of my formidable technical prowess. Uncover a world where innovation meets functionality, showcased through a meticulously crafted Next.js application. Elevate your digital experience with a seamless blend of creativity and technical finesse."
+	title="Projects | Yadumithra U N"
+	description="Discover the interactive brilliance of my projects, peruse my polished portfolio, and delve into a sneak peek of my formidable technical prowess. Uncover a world where innovation meets functionality, showcased through a meticulously crafted SvelteKit application. Elevate your digital experience with a seamless blend of creativity and technical finesse."
 />
 
-<h1 class="sr-only">Wisnu Wicaksono's Projects</h1>
+<h1 class="sr-only">Yadumithra U N's Projects</h1>
 
 <main class="grid flex-1 flex-grow gap-2 overflow-y-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 	{#each articles as article, i (i)}

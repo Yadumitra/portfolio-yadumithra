@@ -36,6 +36,6 @@
 		</button>
 	</div>
 	<p class="not-sr-only mx-auto hidden font-semibold select-none lg:block">Ghostty</p>
-	<p class="not-sr-only mx-auto block font-semibold select-none lg:hidden">Wiscaksono</p>
+	<p class="not-sr-only mx-auto block font-semibold select-none lg:hidden">Yadumithra U N</p>
 	<Face />
 </header>

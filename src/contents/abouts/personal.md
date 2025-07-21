@@ -1,18 +1,17 @@
 ---
 title: personal.ts
-description: Hello, I'm Wisnu Wicaksono, based in Jakarta, Indonesia. I enjoy programming, gaming, eating, and playing basketball. Explore my world of interests!.
+description: Hello, I'm Yadumithra, based in Kerala, India. I enjoy programming, eating, dancing and travelling. Explore my world of interests!.
 ---
 
 ```ts
-const NAME = 'Wisnu Wicaksono';
+const NAME = 'Yadumithra';
 
-let location = 'Jakarta, Indonesia';
+let location = 'Kerala, India';
 
 let hobbies = [
-	'Programming',
-	'Gaming',
+	'Programming',,
 	'Eating',
-	'Basketball'
-	// 'Sleeping'
+	'Dancing',
+	'Travelling'
 ];
 ```

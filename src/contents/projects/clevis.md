@@ -1,25 +1,27 @@
 ---
-title: Clevis
-description: Clevis is a cutting-edge mobile application powered by React Native and enriched with the sleek design of Tailwind CSS. It revolutionizes everyday chores such as laundry and car repairs by providing a seamless and user-friendly experience. Users can easily order and schedule laundry services, select from a variety of options, and track their laundry in real-time. Additionally, Clevis allows users to request car repairs and connect with expert mechanics who come to their location for hassle-free service. The app offers live updates, transparency in service, a user-friendly interface, and customization options, making it a convenient solution for essential tasks.
-poster: /projects/clevis.webp
+title: ShuchitwaEye
+description: ShuchitwaEye is a project built for smartcity, Trivandrum to detect littering and illegal dumping of waste in public areas using computer vision and machine learning. The project aims to enhance urban cleanliness and promote responsible waste management.
+poster: /projects/shuchitwaeye.webp
 techstack:
   - React Native
+  -OpenCV
+  - TensorFlow
+  -computer vision
+  -JavaScript
+  -Node.js
+  -next.js
 ---
 
-Clevis, our cutting-edge mobile application, redefines the way you approach daily tasks such as laundry and car repairs. Merging the power of React Native with the aesthetic finesse of Tailwind CSS, Clevis delivers a seamless and intuitive experience, allowing you to effortlessly order, track, and manage essential services from the palm of your hand.
-[Download on Play Store](https://play.google.com/store/apps/details?id=com.alawaelsky.clevis&pcampaignid=web_share), [Download on App Store](https://apps.apple.com/sa/app/clevis-vendor/id6460821239)
+ShuchitwaEye is a project built for smartcity, Trivandrum to detect littering and illegal dumping of waste in public areas using computer vision and machine learning. The project aims to enhance urban cleanliness and promote responsible waste management.
 
 ## Features
 
-- **Order and Schedule:** Effortlessly place laundry orders and schedule pickup and delivery times at your convenience.
-- **Service Variety:** Choose from a diverse range of laundry services, from standard washing to specialized treatments.
-- **Real-time Tracking:** Monitor the status of your laundry, from pickup to delivery, on an interactive map.
-- **Request Repairs:** Easily submit car repair requests, providing details about the issue and your location.
-- **Service Options:** Select from a variety of car repair and maintenance services to meet your needs.
-- **Expert Mechanics:** Access a network of skilled mechanics who come to your location for hassle-free repairs.,
-- **Transparency:** Stay informed about the estimated time of arrival and any potential delays.
-- **User-Friendly Interface:** Enjoy a clean and user-friendly interface for seamless navigation.
-- **Customization:** Tailor your service preferences and settings to suit your unique needs.
+- **Real-time Monitoring:** Utilize advanced computer vision techniques to monitor public spaces for littering and illegal dumping.
+- **Automated Alerts:** Receive instant notifications and alerts when littering or dumping is detected, enabling swift action.
+- **Data Analytics:** Analyze patterns and trends in littering behavior to inform urban planning and waste management strategies.
+- **Community Engagement:** Foster community involvement by allowing citizens to report littering incidents through a user-friendly app.
+- **Collaboration with Authorities:** Work in tandem with local authorities to address littering issues and implement effective solutions.
+- **Sustainability Focus:** Promote a cleaner, greener environment by encouraging responsible waste disposal practices.
 
 ## Stack
 
@@ -27,4 +29,4 @@ Clevis, our cutting-edge mobile application, redefines the way you approach dail
 - [TailwindCSS](https://tailwindcss.com) - A utility-first CSS framework with customizable classes for versatile design.
 - [Expo](https://expo.dev) - A React Native toolchain that facilitates rapid application development.
 
-Experience the future of task management with Clevis - your all-in-one solution for streamlined and modernized chores.
+Experience the future of urban cleanliness with ShuchitwaEye - your all-in-one solution for monitoring and managing public waste disposal.

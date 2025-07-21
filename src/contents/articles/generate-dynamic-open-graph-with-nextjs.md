@@ -1,229 +1,152 @@
----
-title: Generate Dynamic Open Graph with Nextjs 14
-description: One powerful way to enhance your website's shareability on social media platforms is by implementing dynamic Open Graph meta tags. In this guide, we'll delve into how you can achieve this seamlessly with Next.js, empowering your site to stand out in the crowded digital space.
-publishedDate: November 30, 2023
-poster: /opengraph-image.png
----
+title: Build a Face Recognition Attendance System with Python & OpenCV
+description: Automate your attendance tracking with AI! In this guide, we’ll build a face recognition-based attendance system using Python and OpenCV. Say goodbye to manual roll calls and hello to futuristic automation.
+publishedDate: July 21, 2025
+poster: /face-recognition-attendance.webp
+Manual attendance is boring, prone to errors, and let's be honest—super outdated. But with Python and OpenCV, you can build a face recognition attendance system that records entries automatically in real time. Whether you're running a classroom, office, or event, this project will save you a ton of time.
 
-One powerful way to enhance your website's shareability on social media platforms is by implementing dynamic Open Graph meta tags. In this comprehensive guide, we'll delve into how you can seamlessly achieve this with Next.js 14, empowering your site to stand out in the crowded digital space.
+Why Face Recognition for Attendance?
+Face recognition systems are not just for security cameras anymore. With libraries like OpenCV and face_recognition, you can:
+✅ Automate attendance tracking
+✅ Reduce fraud (no buddy-punching or proxy attendance)
+✅ Store attendance data digitally in a CSV or database
 
-## Exciting Times for Next.js Enthusiasts
+Pretty neat, right?
 
-Exciting times have arrived for Next.js enthusiasts! The release of Next.js 13 brought stability to the App Router, accompanied by a wave of innovative features and approaches. As developers, staying on the cutting edge is paramount, and this release propels us into a realm of possibilities.
+What We’re Building
+We’ll create a Python app that:
 
-In this series of articles, we explore the new horizons that Next.js 13 unfolds. Today, our focus is on a crucial aspect of web development — SEO. With the introduction of Next.js 13, we bid farewell to the old 'Head.tsx' way of managing SEO. Instead, we embark on a journey to discover a fresh approach that aligns with the latest practices and elevates the way we optimize our websites.
+Captures video from your webcam
 
-## Introduction: Understanding Open Graph
+Detects faces and recognizes known individuals
 
-Before we dive into the implementation details, let's understand the significance of Open Graph. Developed by Facebook, Open Graph is an internet protocol that standardizes the incorporation of metadata on a webpage to represent its content. It enables the inclusion of information ranging from the page title to specific details like the duration of a video. Have you ever posted a link on social media?
+Marks attendance in a CSV file with timestamps
 
-## Implementing Dynamic Open Graph with Next.js
+Here’s how to build it.
 
-Let's take a practical approach and see how we can implement dynamic Open Graph in Next.js. The following code snippet demonstrates how to generate dynamic Open Graph images based on a post title.
+Step 1: Install the Required Libraries
+Fire up your terminal and install the following dependencies:
 
-### Step 1: Create a new Next.js project
+bash
+Copy
+Edit
+pip install opencv-python
+pip install face_recognition
+pip install numpy pandas
+opencv-python → For video capture and basic image processing
 
-Start by creating a new Next.js project. Open your terminal and run the following command:
+face_recognition → For facial detection and encoding
 
-```bash
-npx create-next-app@latest
-```
+pandas → For handling attendance logs
 
-Here's how the terminal output should look like:
+Step 2: Prepare Your Dataset
+Create a folder called images/ and add photos of all the people you want to recognize.
 
-```bash
-// Terminal output
-√ What is your project named? … dynamic-opengraph-demo
-√ Would you like to use TypeScript? … No / Yes
-√ Would you like to use ESLint? … No / Yes
-√ Would you like to use Tailwind CSS? … No / Yes
-√ Would you like to use `src/` directory? … No / Yes
-√ Would you like to use App Router? (recommended) … No / Yes
-√ Would you like to customize the default import alias (@/*)? … No / Yes
-√ What import alias would you like configured? … @/*
-```
+Example structure:
 
-And then change directory to the newly created project:
+Copy
+Edit
+images/
+│── John.jpg
+│── Alice.jpg
+│── Sarah.jpg
+Use clear, front-facing photos for better accuracy.
 
-```bash
-cd dynamic-opengraph-demo
-```
+Step 3: Encode Known Faces
+Let’s encode the faces so the system can recognize them later:
 
-Here's the project structure:
+python
+Copy
+Edit
+import cv2
+import face_recognition
+import os
 
-```
-.
-├── README.md
-├── bun.lockb
-├── next-env.d.ts
-├── next.config.js
-├── package.json
-├── postcss.config.js
-├── public
-│   ├── fonts // I created this folder to store my fonts
-│   │   └── outfit-semibold.ttf // Here am using outfit font
-│   ├── og-bg.png // I created this image to use as background
-│   ├── next.svg
-│   └── vercel.svg
-├── src
-│   └── app
-│       ├── api // I created this folder to store my api routes
-│       │   └── og
-│       │       └── route.tsx // Here is my og route
-│       ├── favicon.ico
-│       ├── globals.css
-│       ├── layout.tsx
-│       └── page.tsx
-├── tailwind.config.ts
-└── tsconfig.json
-```
+path = 'images'
+images = []
+classNames = []
 
-As you can see, I created a folder called **_api_** to store my api routes. I also created a folder called **_fonts_** to store my fonts. You can use any font you want.
+for img_name in os.listdir(path):
+    img = cv2.imread(f'{path}/{img_name}')
+    images.append(img)
+    classNames.append(os.path.splitext(img_name)[0])
 
-### Step 2: Implement the Dynamic Open Graph Route
+def encode_faces(images):
+    encoded_list = []
+    for img in images:
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        encodings = face_recognition.face_encodings(rgb_img)[0]
+        encoded_list.append(encodings)
+    return encoded_list
 
-Now, let's delve into the code. Here's how you can implement the dynamic Open Graph route in your Next.js project:
+known_encodings = encode_faces(images)
+print("Encoding Complete!")
+Step 4: Real-Time Face Recognition
+Now, let’s activate the webcam and start recognizing faces:
 
-```jsx
-// Import required modules and constants
-import { ImageResponse } from "next/og";
-import { NextRequest } from "next/server";
+python
+Copy
+Edit
+import numpy as np
+import pandas as pd
+from datetime import datetime
 
-// Route segment config
-export const runtime = "edge";
+attendance = pd.DataFrame(columns=["Name", "Time"])
 
-// Define a function to handle GET requests
-export async function GET(req: NextRequest) {
-  // Extract title from query parameters
-  const { searchParams } = req.nextUrl;
-  const postTitle = searchParams.get("title");
+def mark_attendance(name):
+    global attendance
+    if name not in attendance['Name'].values:
+        now = datetime.now().strftime("%H:%M:%S")
+        attendance = pd.concat([attendance, pd.DataFrame([[name, now]], columns=["Name", "Time"])])
+        attendance.to_csv("Attendance.csv", index=False)
 
-  // Fetch the Outfit font from the specified URL
-  const font = fetch(
-    new URL("../../../../public/fonts/outfit-semibold.ttf", import.meta.url),
-  ).then((res) => res.arrayBuffer());
-  const fontData = await font;
+cap = cv2.VideoCapture(0)
 
-  // Create an ImageResponse with dynamic content
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          backgroundImage: `url(http://localhost:3000/og-bg.png)`,
-        }}
-      >
-        <div
-          style={{
-            marginLeft: 190,
-            marginRight: 190,
-            display: "flex",
-            fontSize: 140,
-            fontFamily: "Outfit",
-            letterSpacing: "-0.05em",
-            fontStyle: "normal",
-            color: "white",
-            lineHeight: "120px",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {postTitle}
-        </div>
-      </div>
-    ),
-    // ImageResponse options
-    {
-      width: 1920,
-      height: 1080,
-      fonts: [
-        {
-          name: "Outfit",
-          data: fontData,
-          style: "normal",
-        },
-      ],
-    },
-  );
-}
-```
+while True:
+    success, img = cap.read()
+    rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    faces = face_recognition.face_locations(rgb_img)
+    encodings = face_recognition.face_encodings(rgb_img, faces)
 
-#### Code Explanation
+    for encoding, face_loc in zip(encodings, faces):
+        matches = face_recognition.compare_faces(known_encodings, encoding)
+        face_dist = face_recognition.face_distance(known_encodings, encoding)
+        match_index = np.argmin(face_dist)
 
-1. Import Modules and Constants: Import the necessary modules and constants.
-2. Set Runtime: Declare runtime as 'edge'.
-3. Handle GET Requests: Define an asynchronous function to handle GET requests.
-4. Fetch Font Data: Use the fetch API to get the Outfit font data and convert it to an array buffer.
-5. Create ImageResponse: Generate an ImageResponse object with dynamic JSX content.
-6. Set ImageResponse Options: Specify options for the ImageResponse, including width, height, and font details.
+        if matches[match_index]:
+            name = classNames[match_index]
+            y1, x2, y2, x1 = face_loc
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(img, name, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+            mark_attendance(name)
 
-### Step 3: Test Your Dynamic Open Graph Route
+    cv2.imshow('Attendance System', img)
 
-Now, let's test your dynamic Open Graph route. Follow these steps:
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
-1. Start your Next.js development server with **_npm run dev_**
-2. Open your browser and navigate to http://localhost:3000/api/og?title=YourDynamicTitle. Replace "YourDynamicTitle" with the desired title for your Open Graph image.
+cap.release()
+cv2.destroyAllWindows()
+Step 5: Test It!
+Run the script:
 
-### Step 4: Implement the Dynamic Open Graph Meta Tags
+bash
+Copy
+Edit
+python attendance.py
+Stand in front of your webcam, and voilà! Your name should appear on the screen, and your attendance gets logged into Attendance.csv.
 
-Next14 uses an object called metadata to describe the page’s SEO attributes including OG attributes. (can be placed in layout.js / page.js)
+Final Thoughts
+Congratulations! You’ve built a real-time face recognition attendance system.
 
-```jsx
-import { Metadata } from 'next'; // if using TypeScript
+✅ Upgrades to try next:
 
-export const metadata: Metadata = {
-  openGraph: {
-    title: 'Next.js',
-    description: 'The React Framework for the Web',
-    url: 'https://nextjs.org',
-    siteName: 'Next.js',
-    images: [
-      {
-        url: 'http://localhost:3000/api/og?title=Next.js', // Dynamic og route
-        width: 800,
-        height: 600,
-      },
-      {
-        url: 'http://localhost:3000/api/og?title=Next.js', // Dynamic og route
-        width: 1800,
-        height: 1600,
-        alt: 'My custom alt',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-};
+Store attendance in a database instead of CSV
 
+Integrate with a web dashboard
 
-export default function Page() {}
-```
+Send notifications when someone arrives
 
-the above code will generate the following meta tags:
+AI + Python = endless automation possibilities.
 
-```html
-<meta property="og:title" content="Next.js" />
-<meta property="og:description" content="The React Framework for the Web" />
-<meta property="og:url" content="https://nextjs.org/" />
-<meta property="og:site_name" content="Next.js" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:image:url" content="http://localhost:3000/api/og?title=Next.js" />
-<meta property="og:image:width" content="800" />
-<meta property="og:image:height" content="600" />
-<meta property="og:image:url" content="http://localhost:3000/api/og?title=Next.js" />
-<meta property="og:image:width" content="1800" />
-<meta property="og:image:height" content="1600" />
-<meta property="og:image:alt" content="My custom alt" />
-<meta property="og:type" content="website" />
-```
+For more resources, check out the face_recognition library docs.
 
-## Conclusion
-
-With these steps, you've successfully implemented and tested dynamic Open Graph in your Next.js project. This feature enhances your website's shareability on social media platforms and provides a visually appealing representation of your content.
-
-For more information, check out the official documentation on [Open Graph](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image).
-or check out on my [Github](https://github.com/wiscaksono/wiscaksono-site/blob/master/src/app/api/og/route.tsx)

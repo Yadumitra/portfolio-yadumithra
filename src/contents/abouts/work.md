@@ -1,34 +1,33 @@
 ---
 title: 'work.ts'
-description: "I'm Wisnu Wicaksono, a Full-Stack Developer currently working fulltime at MSIG Life. Based in Jakarta, Indonesia, I specialize in building engaging user interfaces using React, Next.js, and TypeScript. With a strong foundation in frontend technologies and a passion for clean, efficient code, I combine Tailwind CSS with modern JavaScript frameworks to create exceptional web experiences. When I'm not crafting responsive websites, you can find me exploring Linux (Arch btw), playing video games, or enjoying a good movie!"
+description: "I'm Yadumithra, a student currently studying CSE. Based in Kerala, India. I currently find interest in frontend development and AI/ML, particularly with React and Next.js. I enjoy creating interactive and user-friendly web applications. In my free time, I love exploring new technologies, reading about programming, and contributing to open-source projects."
 ---
 
 ```ts
 const PROFESSION = 'Full-Stack Developer';
-const LOCATION = 'Jakarta, Indonesia';
+const LOCATION = 'Kerala, India';
 
 // Employers
 const employers = [
-	{ name: 'MSIG Life', role: 'Frontend Developer', type: 'Full-time' },
-	{ name: 'Selego', role: 'Frontend Developer', type: 'Part-time' },
-	{ name: 'Upwork', role: 'Frontend Developer', type: 'Freelance' },
-	{ name: 'Falah Inovasi Teknologi', role: 'Frontend Developer', type: 'Previous' }
+	{ name: 'LBSCEK', role: 'student', type: 'Full-time' },
+	{ name: 'SC,Trivandrum', role: 'student intern', type: 'remote' },
+	{ name: 'kasaroam', role: 'Managing director', type: 'remote' }
 ];
 
 // Top Skills
 const skills = {
-	languages: ['TypeScript', 'Go', 'Java'],
+	languages: ['C', 'Python', 'Java', 'JavaScript'],
 	frameworks: [
 		'React',
 		'Next.js',
 		'Tailwind CSS',
 		'Node.js',
-		'Laravel' // still learning this...
+		
 	],
-	databases: ['PostgreSQL', 'MongoDB'],
-	tools: ['Figma', 'Version Control', 'GraphQL', 'Rest API', 'TRPC']
+	databases: ['mySQL', 'MongoDB'],
+	tools: ['Figma', 'Version Control', 'Rest API',]
 };
 
 // Fun Facts
-const interests = ['Programming', 'Memes', 'Video Games', 'Music', 'Movies'];
+const interests = ['Programming', 'Music', 'Movies'];
 ```
