@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Portfolio - Yadumithra U N</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0c0c0c;
+            color: #00ff41;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .terminal-window {
+            background: #1a1a1a;
+            height: 100vh;
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #333;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #555;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control:hover {
+            transform: scale(1.1);
+        }
+
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27ca3f; }
+
+        .terminal-title {
+            color: #ccc;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            height: calc(100vh - 45px);
+            overflow-y: auto;
+            background: linear-gradient(45deg, #0a0a0a 25%, transparent 25%), 
+                        linear-gradient(-45deg, #0a0a0a 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #0a0a0a 75%), 
+                        linear-gradient(-45deg, transparent 75%, #0a0a0a 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .terminal-content {
+            background: rgba(12, 12, 12, 0.95);
+            padding: 20px;
+            min-height: 100%;
+        }
+
+        .prompt {
+            color: #00ff41;
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .prompt::before {
+            content: "yadumithra@portfolio:~$ ";
+            color: #0099ff;
+        }
+
+        .command {
+            color: #ffff00;
+            margin-left: 5px;
+        }
+
+        .output {
+            margin: 10px 0 20px 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .ascii-art {
+            color: #ff6b35;
+            font-size: 12px;
+            line-height: 1;
+            margin: 20px 0;
+            text-shadow: 0 0 10px #ff6b35;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff6b35; }
+            to { text-shadow: 0 0 20px #ff6b35, 0 0 30px #ff6b35; }
+        }
+
+        .command-input {
+            background: transparent;
+            border: none;
+            color: #00ff41;
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+            width: calc(100% - 20px);
+            caret-color: #00ff41;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .input-line::before {
+            content: "yadumithra@portfolio:~$ ";
+            color: #0099ff;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .help-command, .clickable {
+            color: #ff6b35;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .help-command:hover, .clickable:hover {
+            color: #ffff00;
+            text-shadow: 0 0 5px #ffff00;
+        }
+
+        .link {
+            color: #0099ff;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .link:hover {
+            color: #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .skill-bar {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .skill-name {
+            width: 120px;
+            color: #ffff00;
+        }
+
+        .bar-container {
+            flex: 1;
+            background: #333;
+            height: 10px;
+            margin: 0 10px;
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #0099ff);
+            transition: width 2s ease-in-out;
+            border-radius: 5px;
+        }
+
+        .project {
+            border: 1px solid #333;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 4px solid #00ff41;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .project:hover {
+            background: rgba(0, 255, 65, 0.1);
+            transform: translateX(5px);
+        }
+
+        .project-title {
+            color: #ffff00;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .project-tech {
+            color: #ff6b35;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #00ff41 #1a1a1a;
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            border-radius: 4px;
+        }
+
+        .typing-effect {
+            overflow: hidden;
+            border-right: 2px solid #00ff41;
+            white-space: nowrap;
+            animation: typewriter 1s steps(20) forwards, blink-caret 1s infinite;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .resume-section {
+            border: 2px solid #00ff41;
+            padding: 15px;
+            margin: 15px 0;
+            background: rgba(0, 255, 65, 0.05);
+            border-radius: 5px;
+        }
+
+        .resume-header {
+            color: #ffff00;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .resume-item {
+            margin: 10px 0;
+            padding: 8px 0;
+        }
+
+        .resume-item-title {
+            color: #0099ff;
+            font-weight: bold;
+        }
+
+        .resume-item-date {
+            color: #ff6b35;
+            font-size: 12px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 255, 65, 0.9);
+            color: #000;
+            padding: 10px 15px;
+            border-radius: 5px;
+            animation: slideIn 0.5s ease-out;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrixBg"></div>
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <div class="window-controls">
+                <div class="control close" onclick="closeTerminal()"></div>
+                <div class="control minimize" onclick="minimizeTerminal()"></div>
+                <div class="control maximize" onclick="maximizeTerminal()"></div>
+            </div>
+            <div class="terminal-title">portfolio.sh - Yadumithra U N</div>
+        </div>
+        <div class="terminal-body scrollbar">
+            <div class="terminal-content">
+                <div class="ascii-art">
+                    ██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ 
+                    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗
+                    ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║
+                    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║
+                    ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝
+                    ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝ 
+                </div>
+
+                <div class="output">Welcome to my portfolio!
+Type '<span class="help-command" onclick="runCommand('help')">help</span>' to see available commands or try any of the following:
+• <span class="help-command" onclick="runCommand('about')">about</span> - Learn more about me
+• <span class="help-command" onclick="runCommand('skills')">skills</span> - View my technical skills
+• <span class="help-command" onclick="runCommand('projects')">projects</span> - See my recent work
+• <span class="help-command" onclick="runCommand('contact')">contact</span> - Get in touch
+• <span class="help-command" onclick="runCommand('experience')">experience</span> - Professional background
+• <span class="help-command" onclick="runCommand('resume')">resume</span> - View detailed resume
+• <span class="help-command" onclick="runCommand('clear')">clear</span> - Clear the terminal</div>
+
+                <div id="terminal-output"></div>
+
+                <div class="input-line">
+                    <input type="text" class="command-input" id="commandInput" placeholder="Enter command..." autocomplete="off">
+                    <span class="cursor">█</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const commands = {
+            help: () => `Available commands:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+about      - Personal information and background
+skills     - Technical skills and proficiencies  
+projects   - Portfolio of recent projects
+experience - Professional work history
+contact    - Contact information and social links
+education  - Educational background
+resume     - Display complete resume
+github     - Open GitHub profile
+linkedin   - Open LinkedIn profile
+social     - View all social media links
+clear      - Clear terminal screen
+exit       - Close terminal
+whoami     - Display current user info
+date       - Show current date and time
+history    - Show command history
+ls         - List directory contents
+pwd        - Show current directory
+neofetch   - System information
+tree       - Show file tree structure
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 Pro Tips:
+• Use Tab for command completion
+• Use ↑↓ arrows for command history
+• Click on any highlighted command to run it
+• All social links are functional and will open in new tabs`,
+
+            about: () => `╭─────────────────────────────────────────────╮
+│                 ABOUT ME                    │
+╰─────────────────────────────────────────────╯
+
+Name: Yadumithra U N
+Role: CSE Student & Developer
+Location: Kasargod, Kerala, India
+Age: 20 | Batch: 2023-2027
+
+I am a passionate Computer Science student from Kasargod, Kerala, who loves 
+programming and exploring cutting-edge technologies. My journey in tech is 
+driven by curiosity and a desire to create meaningful solutions.
+
+🎯 Current Focus:
+• Full-stack web development
+• AI/ML applications
+• Open source contributions
+• Building innovative projects
+
+🌟 Personal Interests:
+• Traveling & exploring new places
+• Music (listening & discovering new genres)
+• Learning emerging technologies
+• Photography & content creation
+• Community building & mentoring
+
+💭 Philosophy: 
+"Code is poetry written for machines but read by humans. 
+Every line should tell a story and solve a problem."
+
+🚀 What drives me:
+I believe technology can transform lives and communities. Through my projects
+like Kasaroam (showcasing Kerala's beauty) and ShuchitwaEye (AI-powered 
+cleanliness monitoring), I aim to blend innovation with social impact.
+
+📚 Currently Learning: Advanced React patterns, Docker, Kubernetes, 
+and exploring the fascinating world of machine learning algorithms.`,
+
+            skills: () => {
+                setTimeout(animateSkillBars, 100);
+                return `╭─────────────────────────────────────────────╮
+│               TECHNICAL SKILLS              │
+╰─────────────────────────────────────────────╯
+
+Programming Languages:
+<div class="skill-bar">
+  <span class="skill-name">JavaScript</span>
+  <div class="bar-container"><div class="bar-fill" data-width="90"></div></div>
+  <span>90%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">Python</span>
+  <div class="bar-container"><div class="bar-fill" data-width="85"></div></div>
+  <span>85%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">C</span>
+  <div class="bar-container"><div class="bar-fill" data-width="80"></div></div>
+  <span>80%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">Java</span>
+  <div class="bar-container"><div class="bar-fill" data-width="75"></div></div>
+  <span>75%</span>
+</div>
+
+Frontend Technologies:
+<div class="skill-bar">
+  <span class="skill-name">React.js</span>
+  <div class="bar-container"><div class="bar-fill" data-width="88"></div></div>
+  <span>88%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">HTML/CSS</span>
+  <div class="bar-container"><div class="bar-fill" data-width="92"></div></div>
+  <span>92%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">CSS/SASS</span>
+  <div class="bar-container"><div class="bar-fill" data-width="45"></div></div>
+  <span>45%</span>
+</div>
+
+Backend & Database:
+<div class="skill-bar">
+  <span class="skill-name">Node.js</span>
+  <div class="bar-container"><div class="bar-fill" data-width="87"></div></div>
+  <span>87%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">MongoDB</span>
+  <div class="bar-container"><div class="bar-fill" data-width="83"></div></div>
+  <span>83%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">MySQL</span>
+  <div class="bar-container"><div class="bar-fill" data-width="78"></div></div>
+  <span>78%</span>
+</div>
+
+AI/ML & Tools:
+<div class="skill-bar">
+  <span class="skill-name">YOLO/CV</span>
+  <div class="bar-container"><div class="bar-fill" data-width="85"></div></div>
+  <span>85%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">Git</span>
+  <div class="bar-container"><div class="bar-fill" data-width="92"></div></div>
+  <span>92%</span>
+</div>
+<div class="skill-bar">
+  <span class="skill-name">AWS</span>
+  <div class="bar-container"><div class="bar-fill" data-width="10"></div></div>
+  <span>10%</span>
+</div>
+
+🛠️  Other Technologies:
+ Linux, Figma, Photoshop, Premiere Pro, Canva`;
+            },
+
+            projects: () => `╭─────────────────────────────────────────────╮
+│                MY PROJECTS                  │
+╰─────────────────────────────────────────────╯
+
+<div class="project">
+  <div class="project-title">🌴 Kasaroam - Kerala Tourism Blog</div>
+  <div class="project-tech">React • Node.js • MongoDB • Express • Responsive Design</div>
+  A comprehensive cultural and travel blog platform showcasing the hidden beauty 
+  and rich heritage of Kasaragod, Kerala. Features responsive design, dynamic 
+  content management, and user-friendly navigation.
+  
+  ✨ Key Features:
+  • Interactive travel guides for obscure locations
+  • Cultural heritage documentation
+  • Mobile-responsive design
+  • SEO optimized content structure
+  
+  <span class="link" onclick="openLink('https://kasaroam.in')">🌐 Visit Live Site</span>
+</div>
+
+<div class="project">
+  <div class="project-title">👁️ ShuchitwaEye - AI Cleanliness Monitor</div>
+  <div class="project-tech">YOLO v8 • Computer Vision • Python • AI/ML • TensorFlow</div>
+  An innovative AI-powered littering detection system using YOLO architecture for 
+  real-time waste classification and monitoring. Developed for Trivandrum Smart City 
+  initiative to improve urban cleanliness.
+  
+  ✨ Key Features:
+  • Real-time object detection and classification
+  • Custom trained YOLO model for waste detection
+  • Dashboard for monitoring and analytics
+  • Integration with city management systems
+  
+</div>
+
+<div class="project">
+  <div class="project-title">📚 Euphoria - Study Productivity App</div>
+  <div class="project-tech">HTML5 • CSS3 • JavaScript • Local Storage • PWA</div>
+  A comprehensive study companion app designed to boost student productivity 
+  through focus tools, task management, and motivational features.
+  
+  ✨ Key Features:
+  • Pomodoro timer with customizable intervals
+  • Task management with priority levels
+  • Progress tracking and statistics
+  • Motivational quotes and study tips
+  • Dark/light theme toggle
+  
+  <span class="link" onclick="openLink('https://yadumitra.github.io/euphoria/')">🚀 Launch App</span> | 
+  <span class="link" onclick="openLink('https://github.com/yadumitra/euphoria')">📁 Source Code</span>
+</div>
+
+<div class="project">
+  <div class="project-title">💼 Interactive Terminal Portfolio</div>
+  <div class="project-tech">HTML5 • CSS3 • JavaScript • Matrix Effects • Animations</div>
+  A unique, terminal-inspired portfolio website that combines retro aesthetics 
+  with modern web technologies. Features real command execution, matrix rain 
+  effects, and interactive elements.
+  
+  ✨ Key Features:
+  • Authentic terminal experience
+  • Command history and tab completion
+  • Matrix rain background animation
+  • Responsive design with mobile support
+  
+  <span class="link" onclick="runCommand('resume')">📄 View Resume</span>
+</div>
+
+💡 Want to see more? Check out my <span class="link" onclick="runCommand('github')">GitHub profile</span> for additional projects!`,
+
+            experience: () => `╭─────────────────────────────────────────────╮
+│               EXPERIENCE                     │
+╰─────────────────────────────────────────────╯
+
+┌─ IEDC Student Lead                           
+│  LBS College of Engineering | 2024 - Present          
+├─────────────────────────────────────────────────
+│ • Lead and coordinate innovation activities
+│ • Organize technical workshops and hackathons
+│ • Mentor junior students in project development
+│ • Manage team of 15+ active members
+│ • Facilitate startup ecosystem within campus
+│ • Conducted 10+ technical workshops
+│ • Increased participation by 200% in college events
+└─────────────────────────────────────────────────
+
+┌─ IEDC Creative Lead                           
+│  LBS College of Engineering | 2023 - 2024                     
+├─────────────────────────────────────────────────
+│ • Designed promotional materials for events
+│ • Created visual branding for IEDC initiatives
+│ • Collaborated with marketing team on campaigns
+│ • Developed social media content strategy
+│ • Managed visual identity across platforms
+│ • Increased social media engagement by 150%
+└─────────────────────────────────────────────────
+
+┌─ MuLearn Technical Lead                         
+│  µLearn Community | 2025                 
+├─────────────────────────────────────────────────
+│ • Leading educational technology initiatives
+│ • Developing interactive learning modules
+│ • Mentoring students in programming concepts
+│ • Creating technical documentation and tutorials
+│ • Collaborating with industry experts
+│ • Contributing to open-source learning platform
+└─────────────────────────────────────────────────
+
+🏆 Notable Achievements:
+• YIP (Young Innovators Program) District Winner 2023
+• RIBC Hackathon Runner-up 2024
+• Successfully organized TechFest 2024 (500+ participants)
+• Mentored 25+ students in web development`,
+
+            contact: () => `╭─────────────────────────────────────────────╮
+│              CONTACT INFORMATION            │
+╰─────────────────────────────────────────────╯
+
+📧 Email: <span class="link" onclick="copyToClipboard('yadumithra1@gmail.com')">yadumithra1@gmail.com</span>
+📱 Phone: <span class="link" onclick="copyToClipboard('+919544877787')">+91 9544877787</span>
+📍 Location: Kasargod, Kerala, India
+
+🔗 Professional Links:
+• LinkedIn: <span class="link" onclick="openLink('https://www.linkedin.com/in/yadumithra-u-n')">linkedin.com/in/yadumithra-u-n</span>
+• GitHub: <span class="link" onclick="openLink('https://github.com/yadumitra')">github.com/yadumitra</span>
+• Portfolio: <span class="link" onclick="openLink('https://kasaroam.in')">kasaroam.in</span>
+
+💬 Social Media:
+• Instagram: <span class="link" onclick="openLink('https://instagram.com/yadumithra')">@yadumithra</span>
+• Twitter: <span class="link" onclick="openLink('https://twitter.com/yadumithra')">@yadumithra</span>
+
+┌─ Let's Connect! ─────────────────────────────────
+│ 🚀 Available for: Freelance, Internships, Full-time    
+│ 📅 Response Time: Usually within 24 hours        
+│ 🌍 Open to: Remote work & Relocation        
+│ 💡 Interested in: Collaboration & Open Source      
+│                                               
+│ Feel free to reach out for any opportunities,    
+│ collaborations, or just to have a tech chat!     
+└───────────────────────────────────────────────────
+
+💡 Pro Tip: Click on any contact method to copy it to clipboard!`,
+
+            education: () => `╭─────────────────────────────────────────────╮
+│                EDUCATION                    │
+╰─────────────────────────────────────────────╯
+
+🎓 Bachelor of Technology in Computer Science & Engineering
+   LBS College of Engineering, Kasargod
+   2023 - 2027 | Currently in 3rd Year
+   
+   Current CGPA: 8.6/10.0
+   
+📚 Relevant Coursework:
+   • Data Structures and Algorithms
+   • Object-Oriented Programming (Java, C++)
+   • Database Management Systems
+   • Computer Networks and Security
+   • Software Engineering Principles
+   • Web Technologies (HTML, CSS, JavaScript)
+   • Machine Learning Fundamentals
+   • Operating Systems
+   • Computer Graphics and Multimedia
+
+
+
+🏆 Academic Achievements:
+   • Project Award - ShuchitwaEye (2025)
+   • YIP District Winner (2023)
+   • RIBC Hackathon Runner-up (2024)
+  
+
+`,
+
+            resume: () => `<div class="resume-section">
+<div class="resume-header">YADUMITHRA U N - SOFTWARE DEVELOPER</div>
+📧 yadumithra1@gmail.com | 📱 +91 9544877787 | 📍 Kasargod, Kerala
+🔗 <span class="link" onclick="openLink('https://github.com/yadumitra')">GitHub</span> | <span class="link" onclick="openLink('https://linkedin.com/in/yadumithra-u-n')">LinkedIn</span> | <span class="link" onclick="openLink('https://kasaroam.in')">Portfolio</span>
+</div>
+
+<div class="resume-section">
+<div class="resume-header">🎯 OBJECTIVE</div>
+Passionate Computer Science student with strong programming skills and hands-on project 
+experience. Seeking opportunities to contribute to innovative software development projects 
+while continuing to learn and grow in the technology field.
+</div>
+
+<div class="resume-section">
+<div class="resume-header">🎓 EDUCATION</div>
+<div class="resume-item">
+  <div class="resume-item-title">B.Tech Computer Science & Engineering</div>
+  <div class="resume-item-date">LBS College of Engineering, Kasargod | 2023-2027</div>
+  Current CGPA: 8.6/10 | Relevant Coursework: DSA, Web Technologies, DBMS, ML
+</div>
+</div>
+
+<div class="resume-section">
+<div class="resume-header">💼 EXPERIENCE</div>
+<div class="resume-item">
+  <div class="resume-item-title">IEDC Student Lead</div>
+  <div class="resume-item-date">LBS College of Engineering | 2024 - Present</div>
+  • Leading innovation and entrepreneurship activities for 200+ students
+  • Organized 10+ technical workshops and hackathons
+  • Mentored junior students in project development and startup ideation
+</div>
+
+<div class="resume-item">
+  <div class="resume-item-title">MuLearn Technical Lead</div>
+  <div class="resume-item-date">µLearn Community | 2025</div>
+  • Developing interactive learning modules for programming education
+  • Contributing to open-source educational platform
+  • Mentoring students in technical skills development
+</div>
+</div>
+
+<div class="resume-section">
+<div class="resume-header">🚀 PROJECTS</div>
+<div class="resume-item">
+  <div class="resume-item-title">Kasaroam - Tourism Platform</div>
+  <div class="resume-item-date">React, Node.js, MongoDB | 2024</div>
+  • Built responsive cultural tourism blog showcasing Kerala's heritage
+  • Implemented SEO optimization resulting in 500+ monthly visitors
+</div>
+
+<div class="resume-item">
+  <div class="resume-item-title">ShuchitwaEye - AI Cleanliness Monitor</div>
+  <div class="resume-item-date">YOLO v8, Python, Computer Vision | 2024</div>
+  • Developed AI-powered littering detection system for Trivandrum Smart City
+  • Achieved 85% accuracy in waste classification using custom YOLO model
+</div>
+
+<div class="resume-item">
+  <div class="resume-item-title">Euphoria - Study Productivity App</div>
+  <div class="resume-item-date">HTML5, CSS3, JavaScript | 2024</div>
+  • Created comprehensive study companion with Pomodoro timer and task management
+  • Implemented local storage for data persistence and PWA functionality
+</div>
+</div>
+
+<div class="resume-section">
+<div class="resume-header">💻 TECHNICAL SKILLS</div>
+• <strong>Languages:</strong> JavaScript, Python, C, Java, HTML/CSS
+• <strong>Frameworks:</strong> React.js, Node.js, Express.js
+• <strong>Databases:</strong> MongoDB, MySQL
+• <strong>Tools:</strong> Git, Docker, AWS, Figma, Adobe Creative Suite
+• <strong>Specialties:</strong> Full-Stack Development, AI/ML, Computer Vision
+</div>
+
+<div class="resume-section">
+<div class="resume-header">🏆 ACHIEVEMENTS</div>
+• YIP (Young Innovators Program) District Winner 2023
+• RIBC Hackathon Runner-up 2024
+• Dean's List for Academic Excellence (2023, 2024)
+• Successfully organized TechFest 2024 with 500+ participants
+</div>
+
+<div class="resume-section">
+<div class="resume-header">📜 CERTIFICATIONS</div>
+• Google AI/ML Fundamentals | Meta Front-End Developer Certificate
+• freeCodeCamp Responsive Web Design | AWS Cloud Practitioner (In Progress)
+</div>`,
+
+            github: () => {
+                openLink('https://github.com/yadumitra');
+                return `🚀 Opening GitHub profile...
+📁 Repository highlights:
+• 25+ public repositories
+• 150+ contributions this year
+• Active in open source projects
+• Popular repos: Kasaroam, ShuchitwaEye, Euphoria
+
+GitHub: https://github.com/yadumitra`;
+            },
+
+            linkedin: () => {
+                openLink('https://www.linkedin.com/in/yadumithra-u-n');
+                return `💼 Opening LinkedIn profile...
+🔗 Professional network of 500+ connections
+📈 Regular posts about tech and innovation
+🎯 Open to networking and opportunities
+
+LinkedIn: https://www.linkedin.com/in/yadumithra-u-n`;
+            },
+
+            social: () => `╭─────────────────────────────────────────────╮
+│              SOCIAL MEDIA LINKS             │
+╰─────────────────────────────────────────────╯
+
+🔗 Professional:
+• LinkedIn: <span class="link" onclick="openLink('https://www.linkedin.com/in/yadumithra-u-n')">linkedin.com/in/yadumithra-u-n</span>
+• GitHub: <span class="link" onclick="openLink('https://github.com/yadumitra')">github.com/yadumitra</span>
+• Portfolio: <span class="link" onclick="openLink('https://kasaroam.in')">kasaroam.in</span>
+
+📱 Social:
+• Instagram: <span class="link" onclick="openLink('https://instagram.com/yadumithra')">@yadumithra</span>
+• Twitter: <span class="link" onclick="openLink('https://twitter.com/yadumithra')">@yadumithra</span>
+
+💡 All links are clickable and will open in new tabs!`,
+
+            whoami: () => `yadumithra
+Groups: developers students innovators
+Shell: /bin/bash
+Home: /home/yadumithra
+Current Project: Building the future, one line of code at a time`,
+
+            date: () => new Date().toString(),
+
+            pwd: () => `/home/yadumithra/portfolio`,
+
+            ls: () => `total 8
+drwxr-xr-x 2 yadumithra yadumithra 4096 Jan 2024 projects/
+drwxr-xr-x 2 yadumithra yadumithra 4096 Jan 2024 skills/
+-rw-r--r-- 1 yadumithra yadumithra 1337 Jan 2024 about.txt
+-rw-r--r-- 1 yadumithra yadumithra 2048 Jan 2024 resume.pdf
+-rw-r--r-- 1 yadumithra yadumithra  512 Jan 2024 contact.txt
+-rwxr-xr-x 1 yadumithra yadumithra 4096 Jan 2024 run_portfolio.sh`,
+
+            tree: () => `portfolio/
+├── about.txt
+├── contact.txt
+├── resume.pdf
+├── projects/
+│   ├── kasaroam/
+│   │   ├── frontend/
+│   │   └── backend/
+│   ├── shuchitwa-eye/
+│   │   ├── models/
+│   │   └── detection/
+│   └── euphoria/
+│       ├── assets/
+│       └── scripts/
+├── skills/
+│   ├── frontend.json
+│   ├── backend.json
+│   └── tools.json
+└── run_portfolio.sh
+
+8 directories, 9 files`,
+
+            neofetch: () => `                    ./+o+-       yadumithra@portfolio
+                yyyyy- -yyyyyy+      OS: Linux Ubuntu 20.04 LTS
+             ://+//////-yyyyyyo      Host: Terminal Portfolio
+         .++ .:/++++++/-.+sss/\`      Kernel: 5.15.0-generic
+       .:++o:  /++++++++/:--:/-      Uptime: ∞ (always learning)
+      o:+o+:++.\`...\`\`\`.-/oo+++++/     Packages: npm, node, python3
+     .:+o:+o/.          \`+sssoo+/    Shell: bash 5.1.16
+  .++/+:+oo+o:\`             /sssooo.   Resolution: Responsive
+ /+++//+:\`oo+o               /::--:.   DE: Terminal
+ \+/+o+++\`o++o               ++////.   WM: CSS Grid
+  .++.o+++oo+:\`             /dddhhh.   Theme: Matrix Green
+       .+.o+oo:.          \`oddhhhh+    Icons: Lucide
+        \+.++o+o\`\`-\`\`\`\`.:ohdhhhhh+     Terminal: Custom HTML
+         \`:o+++ \`ohhhhhhhhyo++os:      CPU: Intel i7 (Simulated)
+           .o:\`.syhhhhhhh/.oo++o\`      Memory: ∞ MB
+               /osyyyyyyo++ooo+++/     Disk: Unlimited
+                   \`\`\`\` +oo+++o\:      
+                          \`oo++.      
+                                      🚀 Status: Always Coding`,
+
+            history: () => {
+                return `Command History:
+1  help
+2  about
+3  skills
+4  projects
+5  contact
+6  experience
+7  resume
+8  clear
+9  whoami
+10 date
+11 neofetch
+
+💡 Use ↑↓ arrow keys to navigate history!`,
+            },
+
+            clear: () => {
+                document.getElementById('terminal-output').innerHTML = '';
+                return '';
+            },
+
+            exit: () => {
+                showNotification('Thanks for visiting! 👋');
+                setTimeout(() => {
+                    window.close();
+                }, 2000);
+                return `Session terminated. Thanks for visiting my portfolio! 
+Come back anytime to explore more. 👋
+
+Connection to portfolio closed.`;
+            }
+        };
+
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        document.getElementById('commandInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
+                if (command) {
+                    commandHistory.push(command);
+                    historyIndex = commandHistory.length;
+                    runCommand(command);
+                    this.value = '';
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    this.value = '';
+                }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                const input = this.value.toLowerCase();
+                const matches = Object.keys(commands).filter(cmd => cmd.startsWith(input));
+                if (matches.length === 1) {
+                    this.value = matches[0];
+                } else if (matches.length > 1) {
+                    runCommand('', `Available commands: ${matches.join(', ')}`);
+                }
+            }
+        });
+
+        function runCommand(command, customOutput = null) {
+            const output = document.getElementById('terminal-output');
+            
+            // Add command prompt
+            const promptDiv = document.createElement('div');
+            promptDiv.className = 'prompt';
+            promptDiv.innerHTML = `<span class="command">${command}</span>`;
+            output.appendChild(promptDiv);
+
+            // Add output
+            const outputDiv = document.createElement('div');
+            outputDiv.className = 'output';
+            
+            if (customOutput) {
+                outputDiv.innerHTML = customOutput;
+            } else if (commands[command]) {
+                outputDiv.innerHTML = commands[command]();
+            } else if (command) {
+                outputDiv.innerHTML = `Command not found: ${command}. Type 'help' to see available commands.`;
+            }
+
+            output.appendChild(outputDiv);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.bar-fill');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 100);
+            });
+        }
+
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`Copied: ${text}`);
+            }).catch(() => {
+                showNotification('Copy failed - please select manually');
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function closeTerminal() {
+            showNotification('Thanks for visiting! 👋');
+            setTimeout(() => {
+                document.querySelector('.terminal-window').style.display = 'none';
+            }, 1000);
+        }
+
+        function minimizeTerminal() {
+            const terminal = document.querySelector('.terminal-window');
+            terminal.style.transform = 'scale(0.1)';
+            terminal.style.opacity = '0';
+            setTimeout(() => {
+                terminal.style.transform = 'scale(1)';
+                terminal.style.opacity = '1';
+            }, 1000);
+        }
+
+        function maximizeTerminal() {
+            const terminal = document.querySelector('.terminal-window');
+            if (terminal.style.transform === 'scale(1.05)') {
+                terminal.style.transform = 'scale(1)';
+            } else {
+                terminal.style.transform = 'scale(1.05)';
+            }
+        }
+
+        // Matrix rain effect
+        function createMatrixRain() {
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.zIndex = '-1';
+            canvas.style.opacity = '0.1';
+            
+            document.getElementById('matrixBg').appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            const chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ0123456789';
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = Array.from({ length: Math.floor(columns) }, () => 1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ff41';
+                ctx.font = `${fontSize}px monospace`;
+                
+                drops.forEach((y, index) => {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                    const x = index * fontSize;
+                    
+                    ctx.fillText(text, x, y * fontSize);
+                    
+                    if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[index] = 0;
+                    }
+                    drops[index]++;
+                });
+            }
+
+            setInterval(draw, 35);
+        }
+
+        // Initialize matrix effect
+        createMatrixRain();
+
+        // Focus input on page load
+        window.addEventListener('load', () => {
+            document.getElementById('commandInput').focus();
+        });
+
+        // Maintain focus on click
+        document.addEventListener('click', () => {
+            document.getElementById('commandInput').focus();
+        });
+
+        // Handle window resize for matrix effect
+        window.addEventListener('resize', () => {
+            document.getElementById('matrixBg').innerHTML = '';
+            createMatrixRain();
+        });
+    </script>
+</body>
+</html>
